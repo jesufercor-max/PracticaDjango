@@ -1,0 +1,63 @@
+<main class="contenedor">
+    <!-- Tabla Estilizada -->
+    <table class="tabla-protectoras">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Fecha de Creación</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for protectoras in mostrar_post_protectoras %}
+            <tr>
+                <td>{{ protectoras.nombre }}</td>
+                <td><strong>{{ protectoras.fecha_creacion }}</strong></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</main>
+
+<div class="regreso">
+<a href="{% url 'index' %}">Volver</a>
+</div>
+
+<!-- Estilos CSS para que quede bonita -->
+<style>
+    .contenedor {
+        max-width: 1000px;
+        margin: 20px auto;
+        padding: 0 20px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .tabla-protectoras {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        border-radius: 8px 8px 0 0;
+        overflow: hidden;
+    }
+    .tabla-protectoras thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+        font-weight: bold;
+    }
+    .tabla-protectoras th, .tabla-protectoras td {
+        padding: 12px 15px;
+    }
+    .tabla-protectoras tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+    .tabla-protectoras tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+    .tabla-protectoras tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+    .regreso a{
+        color: #008000;
+    }
+</style>
