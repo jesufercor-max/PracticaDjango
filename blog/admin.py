@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Animal, Colaborador, Protectora
+from .models import Anime, Plataforma, Disponibilidad
 
 # Register your models here.
 
-admin.site.register(Animal)
-admin.site.register(Colaborador)
-admin.site.register(Protectora)
+admin.site.register(Anime)
+admin.site.register(Plataforma)
+admin.site.register(Disponibilidad)

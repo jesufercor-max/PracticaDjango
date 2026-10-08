@@ -1,17 +1,25 @@
 <main class="contenedor">
     <!-- Tabla Estilizada -->
-    <table class="tabla-protectoras">
+    <table class="tabla-plataformas">
         <thead>
             <tr>
                 <th>Nombre</th>
-                <th>Fecha de Creación</th>
+                <th>Web</th>
+                <th>Logo</th>
             </tr>
         </thead>
         <tbody>
-            {% for protectoras in mostrar_post_protectoras %}
+            {% for plataformas in mostrar_post_plataformas %}
             <tr>
-                <td>{{ protectoras.nombre }}</td>
-                <td><strong>{{ protectoras.fecha_creacion }}</strong></td>
+                <td>{{ plataformas.nombre }}</td>
+                <td>
+                    <a href="{{ plataformas.web }}" target="_blank">
+                        Visitar Web
+                    </a>
+                </td>
+                <td class="imagen">
+                    <img src="{{ plataformas.logo.url }}" alt="{{ plataformas.nombre }}">
+                </td>    
             </tr>
             {% endfor %}
         </tbody>
@@ -30,7 +38,7 @@
         padding: 0 20px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .tabla-protectoras {
+    .tabla-plataformas {
         width: 100%;
         border-collapse: collapse;
         margin: 25px 0;
@@ -39,25 +47,30 @@
         border-radius: 8px 8px 0 0;
         overflow: hidden;
     }
-    .tabla-protectoras thead tr {
+    .tabla-plataformas thead tr {
         background-color: #009879;
         color: #ffffff;
         text-align: left;
         font-weight: bold;
     }
-    .tabla-protectoras th, .tabla-protectoras td {
+    .tabla-plataformas th, .tabla-plataformas td {
         padding: 12px 15px;
     }
-    .tabla-protectoras tbody tr {
+    .tabla-plataformas tbody tr {
         border-bottom: 1px solid #dddddd;
     }
-    .tabla-protectoras tbody tr:nth-of-type(even) {
+    .tabla-plataformas tbody tr:nth-of-type(even) {
         background-color: #f3f3f3;
     }
-    .tabla-protectoras tbody tr:last-of-type {
+    .tabla-plataformas tbody tr:last-of-type {
         border-bottom: 2px solid #009879;
     }
-    .regreso a{
+       .regreso a{
         color: #008000;
+    }
+    .tabla-plataformas .imagen img {
+    width: 120px;
+    height: 170px;
+    object-fit: cover;
     }
 </style>

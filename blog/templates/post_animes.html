@@ -1,17 +1,21 @@
 <main class="contenedor">
     <!-- Tabla Estilizada -->
-    <table class="tabla-colaboradores">
+    <table class="tabla-animes">
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Cargo</th>
+                <th>Titulo</th>
+                <th>Numero de episodios</th>
+                <th>Imagen</th>
             </tr>
         </thead>
         <tbody>
-            {% for colaboradores in mostrar_post_colaboradores %}
+            {% for animes in mostrar_post_animes %}
             <tr>
-                <td>{{ colaboradores.nombre }}</td>
-                <td><strong>{{ colaboradores.cargo }}</strong></td>
+                <td>{{ animes.titulo }}</td>
+                <td><strong>{{ animes.num_episodios }}</strong></td>
+                <td class="imagen">
+                    <img src="{{ animes.imagen.url }}" alt="{{ animes.titulo }}">
+                </td>            
             </tr>
             {% endfor %}
         </tbody>
@@ -30,7 +34,7 @@
         padding: 0 20px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .tabla-colaboradores {
+    .tabla-animes {
         width: 100%;
         border-collapse: collapse;
         margin: 25px 0;
@@ -39,25 +43,30 @@
         border-radius: 8px 8px 0 0;
         overflow: hidden;
     }
-    .tabla-colaboradores thead tr {
+    .tabla-animes thead tr {
         background-color: #009879;
         color: #ffffff;
         text-align: left;
         font-weight: bold;
     }
-    .tabla-colaboradores th, .tabla-colaboradores td {
+    .tabla-animes th, .tabla-animes td {
         padding: 12px 15px;
     }
-    .tabla-colaboradores tbody tr {
+    .tabla-animes tbody tr {
         border-bottom: 1px solid #dddddd;
     }
-    .tabla-colaboradores tbody tr:nth-of-type(even) {
+    .tabla-animes tbody tr:nth-of-type(even) {
         background-color: #f3f3f3;
     }
-    .tabla-colaboradores tbody tr:last-of-type {
+    .tabla-animes tbody tr:last-of-type {
         border-bottom: 2px solid #009879;
     }
-       .regreso a{
+    .regreso a{
         color: #008000;
+    }
+    .tabla-animes .imagen img {
+    width: 120px;
+    height: 170px;
+    object-fit: cover;
     }
 </style>
