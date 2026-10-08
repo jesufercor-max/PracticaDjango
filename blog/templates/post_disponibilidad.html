@@ -1,17 +1,19 @@
 <main class="contenedor">
     <!-- Tabla Estilizada -->
-    <table class="tabla-animales">
+    <table class="tabla-disponibilidad">
         <thead>
             <tr>
-                <th>Cuidador</th>
-                <th>Nombre del Animal</th>
+                <th>Idioma del audio</th>
+                <th>Doblaje</th>
+                <th>Activo</th>
             </tr>
         </thead>
         <tbody>
-            {% for animales in mostrar_post_anaimales %}
+            {% for disponibilidad in mostrar_post_disponibilidad %}
             <tr>
-                <td>{{ animales.cuidador }}</td>
-                <td><strong>{{ animales.nombre }}</strong></td>
+                <td>{{ disponibilidad.idioma_audio }}</td>
+                <td><strong>{{ disponibilidad.doblaje }}</strong></td>
+                <td>{{ disponibilidad.activo }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -30,7 +32,7 @@
         padding: 0 20px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .tabla-animales {
+    .tabla-disponibilidad {
         width: 100%;
         border-collapse: collapse;
         margin: 25px 0;
@@ -39,22 +41,22 @@
         border-radius: 8px 8px 0 0;
         overflow: hidden;
     }
-    .tabla-animales thead tr {
+    .tabla-disponibilidad thead tr {
         background-color: #009879;
         color: #ffffff;
         text-align: left;
         font-weight: bold;
     }
-    .tabla-animales th, .tabla-animales td {
+    .tabla-disponibilidad th, .tabla-disponibilidad td {
         padding: 12px 15px;
     }
-    .tabla-animales tbody tr {
+    .tabla-disponibilidad tbody tr {
         border-bottom: 1px solid #dddddd;
     }
-    .tabla-animales tbody tr:nth-of-type(even) {
+    .tabla-disponibilidad tbody tr:nth-of-type(even) {
         background-color: #f3f3f3;
     }
-    .tabla-animales tbody tr:last-of-type {
+    .tabla-disponibilidad tbody tr:last-of-type {
         border-bottom: 2px solid #009879;
     }
     .regreso a{

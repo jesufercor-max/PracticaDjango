@@ -4,29 +4,30 @@ from django.utils import timezone
 
 # Create your models here.
 
-# Modelo Animal
+# Modelo Anime 
+class Anime(models.Model):
+    titulo = models.CharField(max_length=150)
+    titulo_original= models.CharField(max_length=150)
+    sinopsis = models.TextField(max_length=1000)
+    anio_estreno = models.IntegerField()
+    num_episodios = models.IntegerField()
+    tipo = models.CharField(max_length=50)
+    estado = models.CharField(max_length=50)
+    imagen = models.ImageField(upload_to='animes/', null=True, blank=True)
 
-class Animal(models.Model):
-    cuidador = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+# Modelo Plataforma
+class Plataforma(models.Model):
     nombre = models.CharField(max_length=100)
-    CATEGORIAS = [
-        ("ANFI", "Anfibios"),
-        ("FEL","Felinos"),
-        ("REP","reptiles"),
-    ]   
-    
-    tipo = models.CharField(
-        max_length=4,
-        choices=CATEGORIAS,
-        default="FEL",
-    )
-    
-class Protectora(models.Model):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField(max_length=200)
-    fecha_creacion = models.DateField()
-    
-class Colaborador(models.Model):
-    nombre = models.CharField(max_length=100)
-    cargo = models.CharField(max_length=50)
-    fecha_entrada_protectora = models.DateTimeField(null=True)
+    descripcion = models.TextField(max_length=500)
+    web = models.URLField()
+    logo = models.ImageField(upload_to='plataformas/', null=True, blank=True)
+    activa = models.BooleanField(default=True)
+
+# Modelo Disponibilidad
+class Disponibilidad(models.Model):
+    idioma_audio = models.CharField(max_length=50)
+    subtitulos = models.BooleanField(default=False)
+    doblaje = models.BooleanField(default=False)
+    fecha_inicio = models.DateField(null=True, blank=True)
+    fecha_fin = models.DateField(null=True, blank=True)
+    activo = models.BooleanField(default=True)
