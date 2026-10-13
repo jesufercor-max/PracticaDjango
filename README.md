@@ -1,429 +1,165 @@
-stema de Gestión de Protectoras y Animales (Django)
+# 🐾🎬 Práctica Django: Gestión de Datos mediante Aplicaciones Web
 
-Proyecto web en **Django** orientado a la administración y registro de animales resguardados, protectoras asociadas y personal colaborador.
-nimes y Plataformas (Django)
+## 📌 Descripción del proyecto
 
-Proyecto web desarrollado en **Django** para la consulta, gestión y despliegue de información sobre animes, plataformas de streaming y su disponibilidad de catálogo.
+Esta práctica consiste en el desarrollo de aplicaciones web utilizando **Django**, un framework de Python que permite crear aplicaciones dinámicas conectadas a una base de datos.
 
+El objetivo principal es aprender a estructurar un proyecto web mediante modelos, vistas, rutas y plantillas HTML, permitiendo consultar y mostrar información almacenada en una base de datos de forma organizada.
 
+La práctica se divide en dos proyectos temáticos:
 
-1. [1. Modelos de Datos (`models.py`)](#1-modelos-de-datos-modelspy)
-2. [2. Configuración de Rutas (`urls.py`)](#2-configuración-de-rutas-urlspy)
-3. [3. Controladores y Vistas (`views.py`)](#3-controladores-y-vistas-viewspy)
-4. [4. Plantillas HTML y Estilos CSS (`templates/`)]
-- [1. Modelos de Datos (`models.py`)](#1-modelos-de-datos-modelspy)
-- [2. Configuración de Rutas (`urls.py`)](#2-configuración-de-rutas-urlspy)
-- [3. Controladores y Vistas (`views.py`)](#3-controladores-y-vistas-viewspy)
-- [4. Plantillas HTML y Estilos CSS (`templates/`)](#4-plantillas-html-y-estilos-css-templates)
-  - [A. Vista Animes (`post_animes.html`)](#a-vista-animes-post_animeshtml)
-  - [B. Vista Disponibilidad (`post_disponibilidad.html`)](#b-vista-disponibilidad-post_disponibilidadhtml)
-  - [C. Vista Plataformas (`post_plataformas.html`)](#c-vista-plataformas-post_plataformashtml)
+- **Sistema de Gestión de Protectoras y Animales:** aplicación orientada al registro y consulta de animales resguardados, organizaciones protectoras y personal colaborador.
+- **Sistema de Gestión de Animes y Plataformas:** aplicación destinada a la consulta de información sobre animes, plataformas de streaming y disponibilidad de sus contenidos.
+
+Ambos proyectos comparten una estructura similar y permiten poner en práctica los principales conceptos del desarrollo web con Django.
 
 ---
 
-## 1. Modelos de Datos (`models.py`)
+## 🎯 Objetivos de la práctica
 
+Los objetivos principales de esta práctica son:
 
-Definición de las clases de la base de datos para registrar usuarios cuidadores, especies de animales, organizaciones protectoras y sus colaboradores:
-
-Definición de las clases que estructuran la base de datos del 
-
-```python
-from django.conf import settings
-from django.db import models 
-from django.utils import timezone
-
-# Modelo Animal
-class Animal(models.Model):
-    cuidador = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    nombre = models.CharField(max_length=100)
-    CATEGORIAS = [
-        ("ANFI", "Anfibios"),
-        ("FEL", "Felinos"),
-        ("REP", "Reptiles"),
-    ]   
-    
-    tipo = models.CharField(
-        max_length=4,
-        choices=CATEGORIAS,
-        default="FEL",
-    )
-
-# Modelo Protectora
-class Protectora(models.Model):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField(max_length=200)
-    fecha_creacion = models.DateField()
-
-# Modelo Colaborador
-class Colaborador(models.Model):
-    nombre = models.CharField(max_length=100)
-
-# Modelo Anime 
-class Anime(models.Model):
-    titulo = models.CharField(max_length=150)
-    titulo_original = models.CharField(max_length=150)
-    sinopsis = models.TextField(max_length=1000)
-    anio_estreno = models.IntegerField()
-    num_episodios = models.IntegerField()
-    tipo = models.CharField(max_length=50)
-    estado = models.CharField(max_length=50)
-    imagen = models.ImageField(upload_to='animes/', null=True, blank=True)
-
-# Modelo Plataforma
-class Plataforma(models.Model):
-    nombre = models.CharField(max_length=100)
-    descripcion = models.TextField(max_length=500)
-    web = models.URLField()
-    logo = models.ImageField(upload_to='plataformas/', null=True, blank=True)
-    activa = models.BooleanField(default=True)
-
-# Modelo Disponibilidad
-class Disponibilidad(models.Model):
-    idioma_audio = models.CharField(max_length=50)
-    subtitulos = models.BooleanField(default=False)
-    doblaje = models.BooleanField(default=False)
-    fecha_inicio = models.DateField(null=True, blank=True)
-
+- Comprender la estructura y el funcionamiento de un proyecto Django.
+- Crear modelos de datos mediante `models.py` para representar diferentes entidades.
+- Definir rutas en `urls.py` para facilitar la navegación entre las distintas páginas.
+- Desarrollar vistas en `views.py` para consultar información de la base de datos.
+- Utilizar el sistema de plantillas de Django para mostrar los datos dinámicamente mediante HTML.
+- Aplicar estilos CSS para mejorar la presentación y la experiencia visual de las aplicaciones.
+- Aprender a relacionar la lógica de la aplicación con la información almacenada en la base de datos.
+- Organizar el código en diferentes archivos para facilitar su mantenimiento y comprensión.
+- Familiarizarse con el uso de Git y GitHub para organizar y gestionar el desarrollo del proyecto mediante ramas.
 
 ---
 
-## 2. Configuración de Rutas (`urls.py`)
+## 🐾 Proyecto 1: Gestión de Protectoras y Animales
 
-adores:
+### Descripción
 
-```python
-from django.urls import path
-from . import views
+Este proyecto está orientado a la administración y consulta de información relacionada con animales, protectoras y colaboradores.
 
-urlpatterns = [
-    path('', views.index, name='index'),
+Permite representar diferentes entidades mediante modelos de Django y mostrar sus registros en páginas web utilizando plantillas HTML.
 
-    path('animales/', views.mostrar_animales, name='post_animales'),
-    path('protectoras/', views.mostrar_protetcoras, name='post_protectoras'),
-    path('colaboradores/', views.mostrar_colaboradores, 
-    path('animes/', views.mostrar_animes, name='post_animes'),
-    path('plataformas/', views.mostrar_plataformas, name='post_plataformas'),
-    path('disponibilidad/', views.mostrar_disponibilidad, 
-]
-```
+### Modelos de datos
 
----
+Se definen los siguientes modelos en `models.py`:
 
-## 3. Controladores y Vistas (`views.py`)
+- **Animal:** almacena el nombre del animal, su tipo y el cuidador asociado. El tipo se selecciona entre diferentes categorías, como anfibios, felinos y reptiles.
+- **Protectora:** contiene información sobre las organizaciones protectoras, incluyendo su nombre, descripción y fecha de creación.
+- **Colaborador:** registra los datos del personal colaborador, como su nombre, cargo y fecha de incorporación a la protectora.
 
+### Funcionalidades
 
-Funciones encagadas de obtener los registros de la base de datos y pasarlos al contexto de las plantillas HTML:
+La aplicación dispone de las siguientes vistas:
 
-```python
-from django.shortcuts import render
-from .models import Animal, Protectora, ColaboradorLógica encagada de consultar la base de datos y renderizar las plantillas correspondientes:
+- **Inicio:** página principal desde la que se puede acceder a las diferentes secciones.
+- **Animales:** muestra los animales registrados en la base de datos.
+- **Protectoras:** presenta la información de las organizaciones protectoras.
+- **Colaboradores:** muestra los nombres y cargos del personal colaborador.
 
-```python
-from django.shortcuts import render
+### Presentación visual
 
+Las plantillas HTML permiten representar la información mediante tablas dinámicas.
 
-def index(request):
-    return render(request, 'index.html')
-
-
-def mostrar_animales(request):
-    posts = Animal.objects.all()
-    return render(request, 'post_animales.html', {'mostrar_post_anaimales': posts})
-
-def mostrar_protetcoras(request):
-    post = Protectora.objects.all()
-    return render(request, 'post_protectoras.html', {'mostrar_post_protectoras': post}) 
-
-def mostrar_colaboradores(request):
-    post = Colaborador.objects.all()
-    return render(request, 'post_colaboradores.html', {'mostrar_post_colaboradores': post}) 
-def mostrar_animes(request):
-    posts = Anime.objects.all()
-    return render(request, 'post_animes.html', {'mostrar_post_animes': posts})
-
-def mostrar_plataformas(request):
-    post = Plataforma.objects.all()
-    return render(request, 'post_plataformas.html', {'mostrar_post_plataformas': post}) 
-
-def mostrar_disponibilidad(request):
-    post = Disponibilidad.objects.all()
-    return render(request, 'post_disponibilidad.html', {'mostrar_post_disponibilidad': post}) 
-
-```
+Se utilizan estilos CSS para mejorar la legibilidad de los datos, incorporando colores, espaciado, bordes y elementos visuales que facilitan la navegación.
 
 ---
 
-## 4. Plantillas HTML y Estilos CSS (`templates/`)
+## 🎬 Proyecto 2: Gestión de Animes y Plataformas
 
+### Descripción
 
-### Vista Colaboradores (`post_colaboradores.html`)
+Este proyecto está destinado a la consulta y presentación de información sobre series de anime y plataformas de streaming.
 
-Muestra el listado de colaboradores con sus nombres y cargos desempeñados dentro de la protectora, usando estilos adaptados en verde esmeralda.
+Su finalidad es aplicar los conocimientos adquiridos con Django mediante una temática diferente, utilizando modelos, vistas, rutas y plantillas para organizar y mostrar la información.
 
-### A. Vista Animes (`post_animes.html`)
+### Modelos de datos
 
+Se definen los siguientes modelos en `models.py`:
 
-```html
-<main class="contenedor">
-    <!-- Tabla Estilizada -->
+- **Anime:** almacena información sobre las series, incluyendo título, título original, sinopsis, año de estreno, número de episodios, tipo, estado e imagen.
+- **Plataforma:** contiene los datos de las plataformas de streaming, como nombre, descripción, página web, logotipo y estado de actividad.
+- **Disponibilidad:** registra información sobre la disponibilidad de los contenidos, incluyendo idioma del audio, subtítulos, doblaje, fechas de inicio y finalización, y estado de actividad.
 
-    <table class="tabla-colaboradores">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Cargo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for colaboradores in mostrar_post_colaboradores %}
-            <tr>
-                <td>{{ colaboradores.nombre }}</td>
-                <td><strong>{{ colaboradores.cargo }}</strong></td>
-    <table class="tabla-animes">
-        <thead>
-            <tr>
-                <th>Titulo</th>
-                <th>Numero de episodios</th>
-                <th>Imagen</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for animes in mostrar_post_animes %}
-            <tr>
-                <td>{{ animes.titulo }}</td>
-                <td><strong>{{ animes.num_episodios }}</strong></td>
-                <td class="imagen">
-                    <img src="{{ animes.imagen.url }}" alt="{{ animes.titulo }}">
-                </td>            
+### Funcionalidades
 
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</main>
+La aplicación dispone de las siguientes vistas:
 
-<div class="regreso">
-    <a href="{% url 'index' %}">Volver</a>
-</div>
+- **Inicio:** página principal de navegación.
+- **Animes:** muestra el catálogo de series registradas, incluyendo su título, número de episodios e imagen.
+- **Plataformas:** presenta las plataformas de streaming disponibles, sus páginas web y sus logotipos.
+- **Disponibilidad:** permite consultar información sobre los idiomas, el doblaje y el estado de disponibilidad de los contenidos.
 
-<!-- Estilos CSS -->
-<style>
-    .contenedor {
-        max-width: 1000px;
-        margin: 20px auto;
-        padding: 0 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+### Presentación visual
 
-    .tabla-colaboradores {
+La información se muestra mediante tablas HTML dinámicas que utilizan el sistema de plantillas de Django.
 
-    .tabla-animes {
+Se incorporan estilos CSS para mejorar la presentación de los datos y facilitar la consulta de la información.
 
-        width: 100%;
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-        border-radius: 8px 8px 0 0;
-        overflow: hidden;
-    }
-
-    .tabla-colaboradores thead tr {
-
-    .tabla-animes thead tr {
-
-        background-color: #009879;
-        color: #ffffff;
-        text-align: left;
-        font-weight: bold;
-    }
-
-    .tabla-colaboradores th, .tabla-colaboradores td {
-        padding: 12px 15px;
-    }
-    .tabla-colaboradores tbody tr {
-        border-bottom: 1px solid #dddddd;
-    }
-    .tabla-colaboradores tbody tr:nth-of-type(even) {
-        background-color: #f3f3f3;
-    }
-    .tabla-colaboradores tbody tr:last-of-type {
-
-    .tabla-animes th, .tabla-animes td {
-        padding: 12px 15px;
-    }
-    .tabla-animes tbody tr {
-        border-bottom: 1px solid #dddddd;
-    }
-    .tabla-animes tbody tr:nth-of-type(even) {
-        background-color: #f3f3f3;
-    }
-    .tabla-animes tbody tr:last-of-type {
-        border-bottom: 2px solid #009879;
-    }
-    .regreso a {
-        color: #008000;
-    }
-    .tabla-animes .imagen img {
-        width: 120px;
-        height: 170px;
-        object-fit: cover;
-    }
-</style>
-```
+Además, se utilizan campos de tipo `ImageField` para almacenar las imágenes de los animes y los logotipos de las plataformas.
 
 ---
 
-### B. Vista Disponibilidad (`post_disponibilidad.html`)
+## 🛠️ Tecnologías utilizadas
 
-```html
-<main class="contenedor">
-    <!-- Tabla Estilizada -->
-    <table class="tabla-disponibilidad">
-        <thead>
-            <tr>
-                <th>Idioma del audio</th>
-                <th>Doblaje</th>
-                <th>Activo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for disponibilidad in mostrar_post_disponibilidad %}
-            <tr>
-                <td>{{ disponibilidad.idioma_audio }}</td>
-                <td><strong>{{ disponibilidad.doblaje }}</strong></td>
-                <td>{{ disponibilidad.activo }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</main>
+Las principales tecnologías y herramientas utilizadas en esta práctica son:
 
-<div class="regreso">
-    <a href="{% url 'index' %}">Volver</a>
-</div>
-
-<!-- Estilos CSS -->
-<style>
-    .contenedor {
-        max-width: 1000px;
-        margin: 20px auto;
-        padding: 0 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .tabla-disponibilidad {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-        border-radius: 8px 8px 0 0;
-        overflow: hidden;
-    }
-    .tabla-disponibilidad thead tr {
-        background-color: #009879;
-        color: #ffffff;
-        text-align: left;
-        font-weight: bold;
-    }
-    .tabla-disponibilidad th, .tabla-disponibilidad td {
-        padding: 12px 15px;
-    }
-    .tabla-disponibilidad tbody tr {
-        border-bottom: 1px solid #dddddd;
-    }
-    .tabla-disponibilidad tbody tr:nth-of-type(even) {
-        background-color: #f3f3f3;
-    }
-    .tabla-disponibilidad tbody tr:last-of-type {
-
-        border-bottom: 2px solid #009879;
-    }
-    .regreso a {
-        color: #008000;
-    }
-</style>
-
+- **Python:** lenguaje de programación empleado para desarrollar la lógica de las aplicaciones.
+- **Django:** framework web utilizado para gestionar modelos, vistas, rutas y plantillas.
+- **HTML5:** lenguaje de marcado empleado para estructurar las páginas web.
+- **CSS3:** utilizado para personalizar la apariencia visual de las aplicaciones.
+- **Base de datos:** permite almacenar y consultar la información gestionada por los modelos de Django.
+- **Git:** sistema de control de versiones utilizado para gestionar los cambios del proyecto.
+- **GitHub:** plataforma para alojar el repositorio y facilitar el trabajo con ramas.
+- **Visual Studio Code:** editor utilizado para desarrollar y organizar el código.
 
 ---
 
-### C. Vista Plataformas (`post_plataformas.html`)
+## 📂 Estructura general del proyecto
 
-```html
-<main class="contenedor">
-    <!-- Tabla Estilizada -->
-    <table class="tabla-plataformas">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Web</th>
-                <th>Logo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for plataformas in mostrar_post_plataformas %}
-            <tr>
-                <td>{{ plataformas.nombre }}</td>
-                <td>
-                    <a href="{{ plataformas.web }}" target="_blank">
-                        Visitar Web
-                    </a>
-                </td>
-                <td class="imagen">
-                    <img src="{{ plataformas.logo.url }}" alt="{{ plataformas.nombre }}">
-                </td>    
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</main>
+Los archivos principales de cada aplicación Django se organizan de la siguiente manera:
 
-<div class="regreso">
-    <a href="{% url 'index' %}">Volver</a>
-</div>
+proyecto/ │ ├── models.py ├── urls.py ├── views.py ├── templates/ │ ├── index.html │ ├── postanimales.html │ ├── postprotectoras.html │ ├── postcolaboradores.html │ ├── postanimes.html │ ├── postplataformas.html │ └── postdisponibilidad.html │ └── README.md
 
-<!-- Estilos CSS -->
-<style>
-    .contenedor {
-        max-width: 1000px;
-        margin: 20px auto;
-        padding: 0 20px;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    .tabla-plataformas {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 25px 0;
-        font-size: 0.9em;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-        border-radius: 8px 8px 0 0;
-        overflow: hidden;
-    }
-    .tabla-plataformas thead tr {
-        background-color: #009879;
-        color: #ffffff;
-        text-align: left;
-        font-weight: bold;
-    }
-    .tabla-plataformas th, .tabla-plataformas td {
-        padding: 12px 15px;
-    }
-    .tabla-plataformas tbody tr {
-        border-bottom: 1px solid #dddddd;
-    }
-    .tabla-plataformas tbody tr:nth-of-type(even) {
-        background-color: #f3f3f3;
-    }
-    .tabla-plataformas tbody tr:last-of-type {
-        border-bottom: 2px solid #009879;
-    }
-    .regreso a {
-        color: #008000;
-    }
-    .tabla-plataformas .imagen img {
-        width: 120px;
-        height: 170px;
-        object-fit: cover;
-    }
-</style>
+
+Esta estructura es orientativa y reúne las plantillas de ambos proyectos. En una implementación real, cada aplicación puede tener su propia carpeta `templates` y sus propios archivos.
+
+### Descripción de los archivos principales
+
+- **`models.py`:** define los modelos y los campos que representan las entidades de la base de datos.
+- **`urls.py`:** establece las rutas que permiten acceder a las diferentes páginas.
+- **`views.py`:** contiene las funciones que consultan los datos y seleccionan las plantillas que deben mostrarse.
+- **`templates/`:** contiene las plantillas HTML encargadas de representar la información.
+- **`README.md`:** documenta el propósito, la estructura y los objetivos de la práctica.
+
+---
+
+## ⚙️ Funcionamiento general
+
+El funcionamiento de las aplicaciones sigue el patrón habitual de Django:
+
+1. El usuario accede a una URL de la aplicación.
+2. Django identifica la ruta correspondiente definida en `urls.py`.
+3. La ruta ejecuta la función asociada en `views.py`.
+4. La vista consulta los registros almacenados mediante los modelos definidos en `models.py`.
+5. Los datos obtenidos se envían al contexto de una plantilla HTML.
+6. Django procesa la plantilla y genera la página que se muestra al usuario.
+
+Este flujo permite separar la gestión de los datos, la lógica de la aplicación y la presentación visual.
+
+---
+
+## 📚 Aprendizajes adquiridos
+
+Con el desarrollo de esta práctica se pretende consolidar los siguientes conocimientos:
+
+- Creación y configuración de modelos en Django.
+- Definición de campos y tipos de datos.
+- Uso del ORM de Django para consultar registros mediante `objects.all()`.
+- Configuración de rutas y asociación con vistas.
+- Envío de información a las plantillas mediante el contexto.
+- Utilización de etiquetas del sistema de plantillas, como `{% for %}` y `{{ variable }}`.
+- Creación de tablas HTML para presentar información procedente de la base de datos.
+- Aplicación de estilos CSS para mejorar la interfaz.
+- Gestión de imágenes mediante campos `ImageField`.
+- Organización del código y documentación de proyectos.
+- Uso de Git y GitHub para el control de versiones y la gestión de ramas.
